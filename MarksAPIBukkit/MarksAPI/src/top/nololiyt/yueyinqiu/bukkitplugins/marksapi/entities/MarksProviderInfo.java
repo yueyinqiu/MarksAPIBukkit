@@ -7,10 +7,12 @@ import java.util.Objects;
 public final class MarksProviderInfo
 {
     private String key;
+    private int priority;
     
-    public MarksProviderInfo(@NotNull String key)
+    public MarksProviderInfo(@NotNull String key, int priority)
     {
         this.key = key;
+        this.priority = priority;
     }
     
     @NotNull
@@ -19,19 +21,25 @@ public final class MarksProviderInfo
         return key;
     }
     
+    public int getPriority()
+    {
+        return priority;
+    }
+    
     @Override
     public boolean equals(Object o)
     {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MarksProviderInfo that = (MarksProviderInfo) o;
-        return Objects.equals(key, that.key);
+        return priority == that.priority &&
+                Objects.equals(key, that.key);
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(key);
+        return Objects.hash(key, priority);
     }
     
     @NotNull
@@ -40,6 +48,7 @@ public final class MarksProviderInfo
     {
         return "MarksProviderInfo{" +
                 "key='" + key + '\'' +
+                ", priority=" + priority +
                 '}';
     }
 }

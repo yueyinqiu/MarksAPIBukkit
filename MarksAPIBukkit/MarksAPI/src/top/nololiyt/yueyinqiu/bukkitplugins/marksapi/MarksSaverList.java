@@ -8,15 +8,27 @@ import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.exceptions.OccupiedKeyExcep
 import java.util.*;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+/**
+ * A list records marks savers.
+ */
 public class MarksSaverList
 {
     private Map<MarksSaverInfo, MarksSaver> marksSavers = new HashMap<>();
     private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
     
+    MarksSaverList()
+    {
+    }
+    
+    /**
+     * Add a saver.
+     *
+     * @param marksSaver The saver.
+     * @throws OccupiedKeyException Already contains a saver with the same key.
+     */
     public void add(@NotNull MarksSaver marksSaver)
     {
         String name = marksSaver.getInfo().getKey();
-        int priority = marksSaver.getInfo().getPriority();
     
         lock.readLock().lock();
         Set<MarksSaverInfo> infoSet = marksSavers.keySet();
@@ -25,7 +37,7 @@ public class MarksSaverList
             for (MarksSaverInfo info : infoSet)
             {
                 if (name.equals(info.getKey()))
-                    throw new OccupiedKeyException("A MarksSaver should have a unique key.");
+                    throw new OccupiedKeyException("A marks saver should have a unique key.");
             }
         }
         finally
@@ -44,6 +56,30 @@ public class MarksSaverList
         }
     }
     
+    /**
+     * Remove a saver.
+     *
+     * @param saver The saver.
+     * @return Whether the saver is successfully removed.
+     */
+    public boolean remove(@NotNull MarksSaver saver)
+    {
+        try
+        {
+            lock.writeLock().lock();
+            return marksSavers.remove(saver.getInfo(), saver);
+        }
+        finally
+        {
+            lock.writeLock().unlock();
+        }
+    }
+    
+    /**
+     * Returns all savers' info.
+     *
+     * @return The info.
+     */
     @NotNull
     public Set<MarksSaverInfo> getAllSaversInfo()
     {
@@ -58,8 +94,26 @@ public class MarksSaverList
         }
     }
     
+    /**
+     * Returns the number of savers in this list.
+     *
+     * @return The number.
+     */
+    public int size()
+    {
+        try
+        {
+            lock.readLock().lock();
+            return marksSavers.size();
+        }
+        finally
+        {
+            lock.readLock().unlock();
+        }
+    }
+    
     @Nullable
-    MarksSaver getSaver(MarksSaverInfo info)
+    MarksSaver getSaver(@NotNull MarksSaverInfo info)
     {
         try
         {
@@ -72,12 +126,13 @@ public class MarksSaverList
         }
     }
     
-    public int size()
+    @NotNull
+    Collection<MarksSaver> getAllProviders()
     {
         try
         {
             lock.readLock().lock();
-            return marksSavers.size();
+            return Collections.unmodifiableCollection(marksSavers.values());
         }
         finally
         {
