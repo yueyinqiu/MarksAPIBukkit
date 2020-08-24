@@ -32,26 +32,27 @@ class Plugin extends JavaPlugin implements MarksProvider
     @Override
     public Location getMark(String s, PermissionChecker permissionChecker)
     {
-        if(!permissionChecker.containsPermission("playersasmarks.admin"))
+        if (!permissionChecker.containsPermission("playersasmarks.admin")
+                || !s.startsWith("pl_"))
             return null;
-        
-        Player player = Bukkit.getPlayer(s);
+    
+        Player player = Bukkit.getPlayer(s.substring(3));
         if (player == null)
             return null;
-        
+    
         return player.getLocation();
     }
     
     @Override
     public Collection<String> getAllMarksKey(PermissionChecker permissionChecker)
     {
-        if(!permissionChecker.containsPermission("playersasmarks.admin"))
+        if (!permissionChecker.containsPermission("playersasmarks.admin"))
         {
             return Collections.emptyList();
         }
         List<String> result = new ArrayList<>();
         for (Player player : Bukkit.getOnlinePlayers())
-            result.add(player.getName());
+            result.add("pl_" + player.getName());
         return Collections.unmodifiableCollection(result);
     }
 }
