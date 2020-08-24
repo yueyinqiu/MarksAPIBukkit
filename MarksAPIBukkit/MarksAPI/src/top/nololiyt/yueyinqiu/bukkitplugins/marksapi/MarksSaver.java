@@ -3,21 +3,21 @@ package top.nololiyt.yueyinqiu.bukkitplugins.marksapi;
 import com.sun.istack.internal.NotNull;
 import org.bukkit.Location;
 import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.entities.MarkSaveResult;
-import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.entities.MarksSaverInfo;
 import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.entities.permissioncheckers.PermissionChecker;
 
 /**
  * Represents a marks saver which can save marks. Most saver should also be a provider.
  */
-public interface MarksSaver
+public interface MarksSaver extends MarksOperator
 {
     /**
-     * Returns the info of the current saver.
+     * Returns the prefix of the saver.
      *
-     * @return The info.
+     * @return The prefix.
      */
+    @Override
     @NotNull
-    MarksSaverInfo getInfo();
+    String getPrefix();
     
     /**
      * Save a mark if the permission checker contains the required permission.

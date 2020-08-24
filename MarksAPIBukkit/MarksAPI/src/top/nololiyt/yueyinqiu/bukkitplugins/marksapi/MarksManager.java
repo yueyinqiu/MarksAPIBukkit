@@ -1,19 +1,19 @@
 package top.nololiyt.yueyinqiu.bukkitplugins.marksapi;
 
 import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
 import org.bukkit.Location;
 import org.bukkit.permissions.Permission;
 import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.entities.MarkSaveResult;
-import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.entities.MarksProviderInfo;
-import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.entities.MarksSaverInfo;
 import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.entities.permissioncheckers.PermissionChecker;
 
 import java.util.*;
 
 public class MarksManager
 {
-    private static MarksManager instance = new MarksManager();
+    public static final char SEPARATOR = '_';
     
+    private static MarksManager instance = new MarksManager();
     @NotNull
     public static MarksManager getInstance()
     {
@@ -24,94 +24,92 @@ public class MarksManager
     {
     }
     
-    private MarksSaverList marksSaverList = new MarksSaverList();
+    private MarksOperatorList<MarksSaver> marksSaverList = new MarksOperatorList<>();
     
     @NotNull
-    public MarksSaverList getMarksSaverList()
+    public MarksOperatorList<MarksSaver> marksSavers()
     {
         return marksSaverList;
     }
     
-    private MarksProviderList marksProviderList = new MarksProviderList();
+    private MarksOperatorList<MarksProvider> marksProviderList = new MarksOperatorList<>();
     
     @NotNull
-    public MarksProviderList getMarksProviderList()
+    public MarksOperatorList<MarksProvider> marksProviders()
     {
         return marksProviderList;
     }
     
     @NotNull
-    public Map<MarksSaverInfo, MarkSaveResult> saveMark(@NotNull String key,
-                                                        @NotNull Location mark,
-                                                        @NotNull PermissionChecker permissionChecker,
-                                                        MarksSaverInfo... marksSavers)
+    public MarkSaveResult saveMark(@NotNull String markKey,
+                                   @NotNull Location mark,
+                                   @NotNull String marksSaverPrefix,
+                                   @NotNull PermissionChecker permissionChecker)
     {
-        Map<MarksSaverInfo, MarkSaveResult> result = new HashMap<>();
-        for (MarksSaverInfo marksSaverInfo : marksSavers)
-        {
-            MarksSaver saver = marksSaverList.getSaver(marksSaverInfo);
-            if (saver != null)
-                result.put(marksSaverInfo, saver.saveMark(key, mark, permissionChecker));
-            else
-                result.put(marksSaverInfo, new NoSuchSaverResult(
-                        "Could not find the saver: " + marksSaverInfo.getKey() + "."));
-        }
-        return result;
+        MarksSaver saver = marksSaverList.get(marksSaverPrefix);
+        if (saver != null)
+            return saver.saveMark(markKey, mark, permissionChecker);
+        else
+            return new NoSuchSaverResult("Could not find the saver: " + marksSaverPrefix + ".");
+    }
+    @NotNull
+    public MarkSaveResult saveMark(@NotNull String markKeyWithPrefix,
+                                   @NotNull Location mark,
+                                   @NotNull PermissionChecker permissionChecker)
+    {
+        StringKeyValue keyValue = splitPrefix(markKeyWithPrefix);
+        if(keyValue == null)
+            return new NoSuchSaverResult("Prefix not found.");
+        return saveMark(keyValue.key, mark, keyValue.value, permissionChecker);
     }
     
-    
-    @NotNull
-    public Map<MarksSaverInfo, MarkSaveResult> saveMark(@NotNull String key,
-                                                        @NotNull Location mark,
-                                                        @NotNull PermissionChecker permissionChecker)
+    @Nullable
+    public Location getMark(@NotNull String markKey,
+                            @NotNull String providerPrefix,
+                            @NotNull PermissionChecker permissionChecker)
     {
-        Map<MarksSaverInfo, MarkSaveResult> result = new HashMap<>();
-        for (MarksSaver saver : marksSaverList.getAllProviders())
-        {
-            result.put(saver.getInfo(), saver.saveMark(key, mark, permissionChecker));
-        }
-        return result;
+        MarksProvider provider = marksProviderList.get(providerPrefix);
+        return provider == null ? null :
+                provider.getMark(markKey, permissionChecker);
     }
     
-    @NotNull
-    public Map<MarksProviderInfo, Location> getMarks(@NotNull String key
-            ,@NotNull PermissionChecker permissionChecker, MarksProviderInfo... marksProvidersInfo)
+    @Nullable
+    public Location getMark(@NotNull String markKeyWithPrefix,
+                            @NotNull PermissionChecker permissionChecker)
     {
-        Map<MarksProviderInfo, Location> result = new HashMap<>();
-        for (MarksProviderInfo marksProviderInfo : marksProvidersInfo)
-        {
-            MarksProvider provider = marksProviderList.getProvider(marksProviderInfo);
-            if (provider != null)
-            {
-                Location mark = provider.getMark(key, permissionChecker);
-                if (mark != null)
-                    result.put(provider.getInfo(), mark);
-            }
-        }
-        return result;
+        StringKeyValue keyValue = splitPrefix(markKeyWithPrefix);
+        if(keyValue == null)
+            return null;
+        return getMark(keyValue.key, keyValue.value, permissionChecker);
     }
     
-    @NotNull
-    public Map<MarksProviderInfo, Location> getMarks(@NotNull String key,
-                                                     @NotNull PermissionChecker permissionChecker)
+    @Nullable
+    private StringKeyValue splitPrefix(@NotNull String marKeyWithPrefix)
     {
-        Map<MarksProviderInfo, Location> result = new HashMap<>();
-        for (MarksProvider marksProvider : marksProviderList.getAllProviders())
-        {
-            Location mark = marksProvider.getMark(key, permissionChecker);
-            if (mark != null)
-                result.put(marksProvider.getInfo(), mark);
-        }
-        return result;
+        int sepIndex = marKeyWithPrefix.indexOf(SEPARATOR);
+        if (sepIndex == -1)
+            return null;
+        return new StringKeyValue(
+                marKeyWithPrefix.substring(0, sepIndex), marKeyWithPrefix.substring(sepIndex));
     }
     
     @NotNull
     public List<String> getAllMarksKey(@NotNull PermissionChecker permissionChecker)
     {
         List<String> result = new ArrayList<>();
-        for (MarksProvider marksProvider : marksProviderList.getAllProviders())
+        StringBuilder stringBuilder = new StringBuilder();
+        for (MarksProvider marksProvider : marksProviderList.getAll())
         {
-            result.addAll(marksProvider.getAllMarksKey(permissionChecker));
+            String key = marksProvider.getPrefix();
+            for (String item : marksProvider.getAllMarksKey(permissionChecker))
+            {
+                stringBuilder.append(key)
+                        .append(SEPARATOR)
+                        .append(item);
+                
+                result.add(stringBuilder.toString());
+                stringBuilder.setLength(0);
+            }
         }
         return result;
     }
@@ -147,6 +145,18 @@ public class MarksManager
         public String getMessage()
         {
             return message;
+        }
+    }
+    
+    private class StringKeyValue
+    {
+        private String key;
+        private String value;
+    
+        public StringKeyValue(String key, String value)
+        {
+            this.key = key;
+            this.value = value;
         }
     }
 }

@@ -29,7 +29,11 @@ public interface MarkSaveResult
         /**
          * Represents that there isn't such a saver.
          */
-        NO_SUCH_SAVER
+        NO_SUCH_SAVER,
+        /**
+         * Represents the states not listed here.
+         */
+        OTHERS
     }
     
     /**
