@@ -1,0 +1,12 @@
+name: Teleporter
+description: This is an example.
+
+depend: [MarksAPI]
+
+version: '1.00'
+author: yueyinqiu5990
+main: top.nololiyt.yueyinqiu.bukkitplugins.marksapi.teleporter.Plugin
+
+commands:
+  teleporter:
+    usage: When calling '/teleporter <mark>', the player will be teleported to the mark.
