@@ -9,6 +9,12 @@
         <element id="file-copy" path="$PROJECT_DIR$/MarksAPI/res/plugin.yml" />
       </root>
     </artifact>
+    <artifact type="jar" name="PlayersAsMarks">
+      <output-path>$PROJECT_DIR$/out/artifacts/PlayersAsMarks</output-path>
+      <root id="archive" name="PlayersAsMarks.jar">
+        <element id="module-output" name="PlayersAsMarks" />
+      </root>
+    </artifact>
   </component>
   <component name="InspectionProjectProfileManager">
     <profile version="1.0">
@@ -140,6 +146,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MarksAPI/MarksAPI.iml" filepath="$PROJECT_DIR$/MarksAPI/MarksAPI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PlayersAsMarks/PlayersAsMarks.iml" filepath="$PROJECT_DIR$/PlayersAsMarks/PlayersAsMarks.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
@@ -152,6 +159,13 @@
     <library name="bukkit-1.15.2-R0.1-20200606.093523-114">
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/libs/bukkit-1.15.2-R0.1-20200606.093523-114.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="MarksAPI">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/libs/MarksAPI.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />

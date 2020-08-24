@@ -1,0 +1,8 @@
+name: PlayersAsMarks
+description: This is an example.
+
+depend: [MarksAPI]
+
+version: '1.00'
+author: yueyinqiu5990
+main: top.nololiyt.yueyinqiu.bukkitplugins.marksapi.playersasmarks.Plugin
