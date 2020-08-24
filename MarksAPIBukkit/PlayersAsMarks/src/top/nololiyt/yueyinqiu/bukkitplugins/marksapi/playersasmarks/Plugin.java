@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.MarksManager;
 import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.MarksProvider;
-import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.entities.MarksProviderInfo;
 import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.entities.permissioncheckers.PermissionChecker;
 
 import java.util.ArrayList;
@@ -20,20 +19,19 @@ class Plugin extends JavaPlugin implements MarksProvider
     @Override
     public void onEnable()
     {
-        MarksManager.getInstance().getMarksProviderList().add(this);
+        MarksManager.getInstance().marksProviders().add(this);
     }
     
     @Override
-    public MarksProviderInfo getInfo()
+    public String getPrefix()
     {
-        return new MarksProviderInfo("example.playersAsMarks", 0);
+        return "expsm";
     }
     
     @Override
     public Location getMark(String s, PermissionChecker permissionChecker)
     {
-        if (!permissionChecker.containsPermission("playersasmarks.admin")
-                || !s.startsWith("pl_"))
+        if (!permissionChecker.containsPermission("playersasmarks.admin"))
             return null;
     
         Player player = Bukkit.getPlayer(s.substring(3));
@@ -52,7 +50,7 @@ class Plugin extends JavaPlugin implements MarksProvider
         }
         List<String> result = new ArrayList<>();
         for (Player player : Bukkit.getOnlinePlayers())
-            result.add("pl_" + player.getName());
+            result.add(player.getName());
         return Collections.unmodifiableCollection(result);
     }
 }

@@ -2,7 +2,8 @@ package top.nololiyt.yueyinqiu.bukkitplugins.marksapi;
 
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
-import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.exceptions.OccupiedKeyException;
+import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.exceptions.IllegalPrefixException;
+import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.exceptions.OccupiedPrefixException;
 
 import java.util.*;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -19,22 +20,34 @@ public class MarksOperatorList<E extends MarksOperator>
     {
     }
     
+    private static final String LEGAL_CHARACTERS = "abcdefghijklmnopqrstuvwxyz1234567890";
     /**
      * Add a operator.
      *
      * @param marksOperator The operator.
-     * @throws OccupiedKeyException Already contains a operator with the same key.
+     * @throws OccupiedPrefixException Already contains a operator with the same prefix.
+     * @throws IllegalPrefixException The prefix is illegal.
      */
     public void add(@NotNull E marksOperator)
+            throws OccupiedPrefixException,IllegalPrefixException
     {
+        String prefix = marksOperator.getPrefix();
+        if (prefix.isEmpty())
+            throw new IllegalPrefixException("Prefix should not be an empty string.");
+    
+        for (char c : prefix.toLowerCase().toCharArray())
+        {
+            if (LEGAL_CHARACTERS.indexOf(c) == -1)
+                throw new IllegalPrefixException("Character '+" + c + "' shouldn't exists in a prefix.");
+        }
         lock.writeLock().lock();
         try
         {
-            marksOperators.put(marksOperator.getPrefix(), marksOperator);
+            marksOperators.put(prefix, marksOperator);
         }
         catch (IllegalArgumentException e)
         {
-            throw new OccupiedKeyException("A marks operator should have a unique prefix.", e);
+            throw new OccupiedPrefixException("A marks operator should have a unique prefix.", e);
         }
         finally
         {

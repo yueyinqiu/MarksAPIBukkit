@@ -9,13 +9,11 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.MarksManager;
-import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.entities.MarksProviderInfo;
 import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.entities.permissioncheckers.CommandSenderChecker;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 class Plugin extends JavaPlugin implements CommandExecutor, TabCompleter
 {
@@ -32,25 +30,11 @@ class Plugin extends JavaPlugin implements CommandExecutor, TabCompleter
             return false;
         if (!(commandSender instanceof Player))
             return false;
-        Map<MarksProviderInfo, Location> marks =
-                MarksManager.getInstance().getMarks(strings[0],
+        Location mark =
+                MarksManager.getInstance().getMark(strings[0],
                         new CommandSenderChecker(commandSender));
-        if (marks.values().isEmpty())
-        {
-            return false;
-        }
-        Location location = null;
-        int priority = -1;
-        for (Map.Entry<MarksProviderInfo, Location> mark : marks.entrySet())
-        {
-            int np = mark.getKey().getPriority();
-            if (np > priority)
-            {
-                location = mark.getValue();
-                priority = np;
-            }
-        }
-        ((Player) commandSender).teleport(location);
+        if (mark != null)
+            ((Player) commandSender).teleport(mark);
         return true;
     }
     
