@@ -33,8 +33,8 @@ class JoinListener implements Listener
         
         BigDecimal current = versionManager.getCurrentVersion();
         LatestVersion latest = versionManager.getLatestVersion();
-        player.sendMessage("[]: Version: '" + latest.getVersion().toString() + "' is available. " +
+        player.sendMessage("[MarksAPI]: Version: '" + latest.getVersion().toString() + "' is available. " +
                 "And you are now using '" + current.toString() + "'. " +
-                "Download it at 'https://yueyinqiu.github.io/MarksBukkit/download'.");
+                "Download it at 'https://yueyinqiu.github.io/MarksAPIBukkit/download'.");
     }
 }

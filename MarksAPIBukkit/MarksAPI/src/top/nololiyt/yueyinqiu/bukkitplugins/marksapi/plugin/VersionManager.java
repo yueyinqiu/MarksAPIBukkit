@@ -14,9 +14,9 @@ class VersionManager
 {
     private Plugin plugin;
     private static final String CHECK_LINK =
-            "https://yueyinqiu.github.io/MarksBukkit/MarksAPI/version.html";
+            "https://yueyinqiu.github.io/MarksAPIBukkit/version.html";
     
-    public VersionManager(Plugin plugin)
+    VersionManager(Plugin plugin)
     {
         this.plugin = plugin;
         if (updateCheckerEnabled = plugin.getConfig().getBoolean("update-checker.enabled"))
@@ -72,7 +72,7 @@ class VersionManager
                     if (latestVersion.getVersion().compareTo(current) > 0)
                         warning("Version: '" + latestVersion.getVersion().toString() + "' is available. " +
                                 "And you are now using '" + current.toString() + "'. " +
-                                "Download it at 'https://yueyinqiu.github.io/MarksBukkit/download'.");
+                                "Download it at 'https://yueyinqiu.github.io/MarksAPIBukkit/download'.");
                     else
                         warning("The current version is the latest.");
                 }
@@ -136,7 +136,7 @@ class VersionManager
                 }
                 catch (Exception e)
                 {
-    
+                    // DO NOTHING
                 }
             }
         }.runTaskTimerAsynchronously(plugin, delay, period);
