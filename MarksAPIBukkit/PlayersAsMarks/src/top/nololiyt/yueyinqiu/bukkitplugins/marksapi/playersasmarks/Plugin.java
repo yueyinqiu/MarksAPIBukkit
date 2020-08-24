@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-class Plugin extends JavaPlugin implements MarksProvider
+public class Plugin extends JavaPlugin implements MarksProvider
 {
     @Override
     public void onEnable()
@@ -34,7 +34,8 @@ class Plugin extends JavaPlugin implements MarksProvider
         if (!permissionChecker.containsPermission("playersasmarks.admin"))
             return null;
     
-        Player player = Bukkit.getPlayer(s.substring(3));
+        Player player = Bukkit.getPlayer(s);
+        
         if (player == null)
             return null;
     

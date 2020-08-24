@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-class Plugin extends JavaPlugin implements CommandExecutor, TabCompleter
+public class Plugin extends JavaPlugin implements CommandExecutor, TabCompleter
 {
     @Override
     public void onEnable()
@@ -33,6 +33,7 @@ class Plugin extends JavaPlugin implements CommandExecutor, TabCompleter
         Location mark =
                 MarksManager.getInstance().getMark(strings[0],
                         new CommandSenderChecker(commandSender));
+    
         if (mark != null)
             ((Player) commandSender).teleport(mark);
         return true;

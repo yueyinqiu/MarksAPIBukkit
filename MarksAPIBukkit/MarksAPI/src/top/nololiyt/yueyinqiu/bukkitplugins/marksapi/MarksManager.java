@@ -12,6 +12,7 @@ import java.util.*;
 public class MarksManager
 {
     public static final char SEPARATOR = '_';
+    public static final char SEPARATOR_LENGTH = 1;
     
     private static MarksManager instance = new MarksManager();
     @NotNull
@@ -60,7 +61,7 @@ public class MarksManager
         StringKeyValue keyValue = splitPrefix(markKeyWithPrefix);
         if(keyValue == null)
             return new NoSuchSaverResult("Prefix not found.");
-        return saveMark(keyValue.key, mark, keyValue.value, permissionChecker);
+        return saveMark(keyValue.value, mark, keyValue.key, permissionChecker);
     }
     
     @Nullable
@@ -80,7 +81,7 @@ public class MarksManager
         StringKeyValue keyValue = splitPrefix(markKeyWithPrefix);
         if(keyValue == null)
             return null;
-        return getMark(keyValue.key, keyValue.value, permissionChecker);
+        return getMark(keyValue.value, keyValue.key, permissionChecker);
     }
     
     @Nullable
@@ -90,7 +91,8 @@ public class MarksManager
         if (sepIndex == -1)
             return null;
         return new StringKeyValue(
-                marKeyWithPrefix.substring(0, sepIndex), marKeyWithPrefix.substring(sepIndex));
+                marKeyWithPrefix.substring(0, sepIndex),
+                marKeyWithPrefix.substring(sepIndex + SEPARATOR_LENGTH));
     }
     
     @NotNull

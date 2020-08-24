@@ -3,7 +3,7 @@ package top.nololiyt.yueyinqiu.bukkitplugins.marksapi.plugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-class Plugin extends JavaPlugin
+public class Plugin extends JavaPlugin
 {
     @Override
     public void onEnable()
