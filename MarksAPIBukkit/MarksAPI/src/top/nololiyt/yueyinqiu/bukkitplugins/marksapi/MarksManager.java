@@ -3,18 +3,22 @@ package top.nololiyt.yueyinqiu.bukkitplugins.marksapi;
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
 import org.bukkit.Location;
-import org.bukkit.permissions.Permission;
-import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.entities.MarkSaveResult;
-import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.entities.permissioncheckers.PermissionChecker;
+import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.entities.MarkRelatedValues;
 
 import java.util.*;
 
+/**
+ * Represents a marks manager.
+ */
 public class MarksManager
 {
-    public static final char SEPARATOR = '_';
-    public static final char SEPARATOR_LENGTH = 1;
+    private static final char SEPARATOR = '_';
+    private static final char SEPARATOR_LENGTH = 1;
     
     private static MarksManager instance = new MarksManager();
+    /**
+     * Returns a marks manager.
+     */
     @NotNull
     public static MarksManager getInstance()
     {
@@ -25,63 +29,49 @@ public class MarksManager
     {
     }
     
-    private MarksOperatorList<MarksSaver> marksSaverList = new MarksOperatorList<>();
+    private MarksProviderList marksProviderList = new MarksProviderList();
     
+    /**
+     * Returns the marks provider list of this manager. You can add the provider into it.
+     * @return The marks provider list.
+     */
     @NotNull
-    public MarksOperatorList<MarksSaver> marksSavers()
-    {
-        return marksSaverList;
-    }
-    
-    private MarksOperatorList<MarksProvider> marksProviderList = new MarksOperatorList<>();
-    
-    @NotNull
-    public MarksOperatorList<MarksProvider> marksProviders()
+    public MarksProviderList marksProviders()
     {
         return marksProviderList;
     }
     
-    @NotNull
-    public MarkSaveResult saveMark(@NotNull String markKey,
-                                   @NotNull Location mark,
-                                   @NotNull String marksSaverPrefix,
-                                   @NotNull PermissionChecker permissionChecker)
-    {
-        MarksSaver saver = marksSaverList.get(marksSaverPrefix);
-        if (saver != null)
-            return saver.saveMark(markKey, mark, permissionChecker);
-        else
-            return new NoSuchSaverResult("Could not find the saver: " + marksSaverPrefix + ".");
-    }
-    @NotNull
-    public MarkSaveResult saveMark(@NotNull String markKeyWithPrefix,
-                                   @NotNull Location mark,
-                                   @NotNull PermissionChecker permissionChecker)
-    {
-        StringKeyValue keyValue = splitPrefix(markKeyWithPrefix);
-        if(keyValue == null)
-            return new NoSuchSaverResult("Prefix not found.");
-        return saveMark(keyValue.value, mark, keyValue.key, permissionChecker);
-    }
-    
+    /**
+     * Get a mark.
+     * @param markKey The key of the mark without the provider prefix.
+     * @param providerPrefix The provider prefix.
+     * @param markRelatedValues Some related values.
+     * @return The mark; or <code>null</code> if it wasn't found.
+     */
     @Nullable
     public Location getMark(@NotNull String markKey,
                             @NotNull String providerPrefix,
-                            @NotNull PermissionChecker permissionChecker)
+                            @NotNull MarkRelatedValues markRelatedValues)
     {
         MarksProvider provider = marksProviderList.get(providerPrefix);
         return provider == null ? null :
-                provider.getMark(markKey, permissionChecker);
+                provider.getMark(markKey, markRelatedValues);
     }
     
+    /**
+     * Get a mark.
+     * @param markKeyWithPrefix The key of the mark with the provider prefix.
+     * @param markRelatedValues Some related values.
+     * @return The mark; or <code>null</code> if it wasn't found.
+     */
     @Nullable
     public Location getMark(@NotNull String markKeyWithPrefix,
-                            @NotNull PermissionChecker permissionChecker)
+                            @NotNull MarkRelatedValues markRelatedValues)
     {
         StringKeyValue keyValue = splitPrefix(markKeyWithPrefix);
         if(keyValue == null)
             return null;
-        return getMark(keyValue.value, keyValue.key, permissionChecker);
+        return getMark(keyValue.value, keyValue.key, markRelatedValues);
     }
     
     @Nullable
@@ -95,15 +85,20 @@ public class MarksManager
                 marKeyWithPrefix.substring(sepIndex + SEPARATOR_LENGTH));
     }
     
+    /**
+     * Get all marks' keys.
+     * @param markRelatedValues Some related values.
+     * @return The keys.
+     */
     @NotNull
-    public List<String> getAllMarksKey(@NotNull PermissionChecker permissionChecker)
+    public List<String> getAllMarksKey(@NotNull MarkRelatedValues markRelatedValues)
     {
         List<String> result = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
         for (MarksProvider marksProvider : marksProviderList.getAll())
         {
             String key = marksProvider.getPrefix();
-            for (String item : marksProvider.getAllMarksKey(permissionChecker))
+            for (String item : marksProvider.getAllMarksKey(markRelatedValues))
             {
                 stringBuilder.append(key)
                         .append(SEPARATOR)
@@ -114,40 +109,6 @@ public class MarksManager
             }
         }
         return result;
-    }
-    
-    private class NoSuchSaverResult implements MarkSaveResult
-    {
-        private String message;
-        
-        private NoSuchSaverResult(String message)
-        {
-            this.message = message;
-        }
-        
-        @Override
-        public MarkSaveResult.ResultState getState()
-        {
-            return MarkSaveResult.ResultState.NO_SUCH_SAVER;
-        }
-        
-        @Override
-        public Exception getException()
-        {
-            return null;
-        }
-    
-        @Override
-        public Permission getPermission()
-        {
-            return null;
-        }
-    
-        @Override
-        public String getMessage()
-        {
-            return message;
-        }
     }
     
     private class StringKeyValue

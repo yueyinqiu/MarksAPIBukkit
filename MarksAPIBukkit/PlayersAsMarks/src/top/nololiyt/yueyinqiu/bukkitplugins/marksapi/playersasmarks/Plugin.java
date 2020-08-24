@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.MarksManager;
 import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.MarksProvider;
-import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.entities.permissioncheckers.PermissionChecker;
+import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.entities.MarkRelatedValues;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,9 +29,10 @@ public class Plugin extends JavaPlugin implements MarksProvider
     }
     
     @Override
-    public Location getMark(String s, PermissionChecker permissionChecker)
+    public Location getMark(String s, MarkRelatedValues relatedValues)
     {
-        if (!permissionChecker.containsPermission("playersasmarks.admin"))
+        if (relatedValues.getCommandSender() == null ||
+                !relatedValues.getCommandSender().hasPermission("playersasmarks.admin"))
             return null;
     
         Player player = Bukkit.getPlayer(s);
@@ -43,9 +44,10 @@ public class Plugin extends JavaPlugin implements MarksProvider
     }
     
     @Override
-    public Collection<String> getAllMarksKey(PermissionChecker permissionChecker)
+    public Collection<String> getAllMarksKey(MarkRelatedValues relatedValues)
     {
-        if (!permissionChecker.containsPermission("playersasmarks.admin"))
+        if (relatedValues.getCommandSender() == null ||
+                !relatedValues.getCommandSender().hasPermission("playersasmarks.admin"))
         {
             return Collections.emptyList();
         }

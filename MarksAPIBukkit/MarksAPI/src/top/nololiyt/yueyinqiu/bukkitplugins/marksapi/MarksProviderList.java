@@ -9,29 +9,29 @@ import java.util.*;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
- * A list records marks operators.
+ * A list records marks providers.
  */
-public class MarksOperatorList<E extends MarksOperator>
+public class MarksProviderList
 {
-    private Map<String, E> marksOperators = new HashMap<>();
+    private Map<String, MarksProvider> marksProviders = new HashMap<>();
     private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
     
-    MarksOperatorList()
+    MarksProviderList()
     {
     }
     
     private static final String LEGAL_CHARACTERS = "abcdefghijklmnopqrstuvwxyz1234567890";
     /**
-     * Add a operator.
+     * Add a provider.
      *
-     * @param marksOperator The operator.
-     * @throws OccupiedPrefixException Already contains a operator with the same prefix.
+     * @param marksProvider The provider.
+     * @throws OccupiedPrefixException Already contains a provider with the same prefix.
      * @throws IllegalPrefixException The prefix is illegal.
      */
-    public void add(@NotNull E marksOperator)
+    public void add(@NotNull MarksProvider marksProvider)
             throws OccupiedPrefixException,IllegalPrefixException
     {
-        String prefix = marksOperator.getPrefix();
+        String prefix = marksProvider.getPrefix();
         if (prefix.isEmpty())
             throw new IllegalPrefixException("Prefix should not be an empty string.");
     
@@ -43,11 +43,11 @@ public class MarksOperatorList<E extends MarksOperator>
         lock.writeLock().lock();
         try
         {
-            marksOperators.put(prefix, marksOperator);
+            marksProviders.put(prefix, marksProvider);
         }
         catch (IllegalArgumentException e)
         {
-            throw new OccupiedPrefixException("A marks operator should have a unique prefix.", e);
+            throw new OccupiedPrefixException("A marks provider should have a unique prefix.", e);
         }
         finally
         {
@@ -56,17 +56,17 @@ public class MarksOperatorList<E extends MarksOperator>
     }
     
     /**
-     * Remove a operator.
+     * Remove a provider.
      *
-     * @param marksOperator The operator.
-     * @return Whether the operator is successfully removed.
+     * @param marksProvider The provider.
+     * @return Whether the provider is successfully removed.
      */
-    public boolean remove(@NotNull E marksOperator)
+    public boolean remove(@NotNull MarksProvider marksProvider)
     {
         try
         {
             lock.writeLock().lock();
-            return marksOperators.remove(marksOperator.getPrefix(), marksOperator);
+            return marksProviders.remove(marksProvider.getPrefix(), marksProvider);
         }
         finally
         {
@@ -75,7 +75,7 @@ public class MarksOperatorList<E extends MarksOperator>
     }
     
     /**
-     * Returns all operators' info.
+     * Returns all providers' info.
      *
      * @return The info.
      */
@@ -85,7 +85,7 @@ public class MarksOperatorList<E extends MarksOperator>
         try
         {
             lock.readLock().lock();
-            return Collections.unmodifiableSet(marksOperators.keySet());
+            return Collections.unmodifiableSet(marksProviders.keySet());
         }
         finally
         {
@@ -94,7 +94,7 @@ public class MarksOperatorList<E extends MarksOperator>
     }
     
     /**
-     * Returns the number of operators in this list.
+     * Returns the number of providers in this list.
      *
      * @return The number.
      */
@@ -103,7 +103,7 @@ public class MarksOperatorList<E extends MarksOperator>
         try
         {
             lock.readLock().lock();
-            return marksOperators.size();
+            return marksProviders.size();
         }
         finally
         {
@@ -112,12 +112,12 @@ public class MarksOperatorList<E extends MarksOperator>
     }
     
     @NotNull
-    Collection<E> getAll()
+    Collection<MarksProvider> getAll()
     {
         try
         {
             lock.readLock().lock();
-            return Collections.unmodifiableCollection(marksOperators.values());
+            return Collections.unmodifiableCollection(marksProviders.values());
         }
         finally
         {
@@ -126,12 +126,12 @@ public class MarksOperatorList<E extends MarksOperator>
     }
     
     @Nullable
-    E get(@NotNull String key)
+    MarksProvider get(@NotNull String key)
     {
         try
         {
             lock.readLock().lock();
-            return marksOperators.get(key);
+            return marksProviders.get(key);
         }
         finally
         {

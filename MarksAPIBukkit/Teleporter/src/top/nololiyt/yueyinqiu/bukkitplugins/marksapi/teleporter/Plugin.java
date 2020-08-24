@@ -9,7 +9,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.MarksManager;
-import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.entities.permissioncheckers.CommandSenderChecker;
+import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.entities.MarkRelatedValues;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,8 +31,16 @@ public class Plugin extends JavaPlugin implements CommandExecutor, TabCompleter
         if (!(commandSender instanceof Player))
             return false;
         Location mark =
-                MarksManager.getInstance().getMark(strings[0],
-                        new CommandSenderChecker(commandSender));
+                MarksManager.getInstance().getMark(
+                        strings[0],
+                        new MarkRelatedValues()
+                        {
+                            @Override
+                            public CommandSender getCommandSender()
+                            {
+                                return commandSender;
+                            }
+                        });
     
         if (mark != null)
             ((Player) commandSender).teleport(mark);
@@ -42,18 +50,26 @@ public class Plugin extends JavaPlugin implements CommandExecutor, TabCompleter
     @Override
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings)
     {
-        if(strings.length > 1)
+        if (strings.length > 1)
             return Collections.emptyList();
-        List<String> marks = MarksManager.getInstance().getAllMarksKey(
-                new CommandSenderChecker(commandSender));
-        if(strings.length == 0)
+        List<String> marks = MarksManager.getInstance().
+                getAllMarksKey(
+                        new MarkRelatedValues()
+                        {
+                            @Override
+                            public CommandSender getCommandSender()
+                            {
+                                return commandSender;
+                            }
+                        });
+        if (strings.length == 0)
         {
             return marks;
         }
         List<String> result = new ArrayList<>();
-        for(String mark : marks)
+        for (String mark : marks)
         {
-            if(mark.startsWith(strings[0]))
+            if (mark.startsWith(strings[0]))
             {
                 result.add(mark);
             }
