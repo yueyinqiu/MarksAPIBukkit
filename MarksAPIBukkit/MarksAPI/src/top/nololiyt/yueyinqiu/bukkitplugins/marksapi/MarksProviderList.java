@@ -75,12 +75,12 @@ public class MarksProviderList
     }
     
     /**
-     * Returns all providers' info.
+     * Returns all providers' prefix.
      *
-     * @return The info.
+     * @return The prefixes.
      */
     @NotNull
-    public Set<String> getAllKeys()
+    public Set<String> getAllPrefixes()
     {
         try
         {
