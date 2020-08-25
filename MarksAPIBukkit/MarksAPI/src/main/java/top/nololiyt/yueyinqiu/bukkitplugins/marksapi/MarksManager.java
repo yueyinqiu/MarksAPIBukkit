@@ -1,7 +1,5 @@
 package top.nololiyt.yueyinqiu.bukkitplugins.marksapi;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
 import org.bukkit.Location;
 import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.entities.MarkRelatedValues;
 
@@ -19,7 +17,7 @@ public class MarksManager
     /**
      * Returns a marks manager.
      */
-    @NotNull
+    
     public static MarksManager getInstance()
     {
         return instance;
@@ -35,7 +33,7 @@ public class MarksManager
      * Returns the marks provider list of this manager. You can add the provider into it.
      * @return The marks provider list.
      */
-    @NotNull
+    
     public MarksProviderList marksProviders()
     {
         return marksProviderList;
@@ -48,10 +46,10 @@ public class MarksManager
      * @param markRelatedValues Some related values.
      * @return The mark; or <code>null</code> if it wasn't found.
      */
-    @Nullable
-    public Location getMark(@NotNull String markKey,
-                            @NotNull String providerPrefix,
-                            @NotNull MarkRelatedValues markRelatedValues)
+    
+    public Location getMark( String markKey,
+                             String providerPrefix,
+                             MarkRelatedValues markRelatedValues)
     {
         MarksProvider provider = marksProviderList.get(providerPrefix);
         return provider == null ? null :
@@ -64,9 +62,9 @@ public class MarksManager
      * @param markRelatedValues Some related values.
      * @return The mark; or <code>null</code> if it wasn't found.
      */
-    @Nullable
-    public Location getMark(@NotNull String markKeyWithPrefix,
-                            @NotNull MarkRelatedValues markRelatedValues)
+    
+    public Location getMark( String markKeyWithPrefix,
+                             MarkRelatedValues markRelatedValues)
     {
         StringKeyValue keyValue = splitPrefix(markKeyWithPrefix);
         if(keyValue == null)
@@ -74,8 +72,8 @@ public class MarksManager
         return getMark(keyValue.value, keyValue.key, markRelatedValues);
     }
     
-    @Nullable
-    private StringKeyValue splitPrefix(@NotNull String marKeyWithPrefix)
+    
+    private StringKeyValue splitPrefix( String marKeyWithPrefix)
     {
         int sepIndex = marKeyWithPrefix.indexOf(SEPARATOR);
         if (sepIndex == -1)
@@ -90,8 +88,8 @@ public class MarksManager
      * @param markRelatedValues Some related values.
      * @return The keys.
      */
-    @NotNull
-    public List<String> getAllMarksKey(@NotNull MarkRelatedValues markRelatedValues)
+    
+    public List<String> getAllMarksKey( MarkRelatedValues markRelatedValues)
     {
         List<String> result = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();

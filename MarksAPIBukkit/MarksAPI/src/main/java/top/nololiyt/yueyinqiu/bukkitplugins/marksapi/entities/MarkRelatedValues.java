@@ -1,6 +1,5 @@
 package top.nololiyt.yueyinqiu.bukkitplugins.marksapi.entities;
 
-import com.sun.istack.internal.Nullable;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -16,6 +15,5 @@ public interface MarkRelatedValues
      *
      * @return The related command sender.
      */
-    @Nullable
     CommandSender getCommandSender();
 }

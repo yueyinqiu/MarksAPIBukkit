@@ -1,7 +1,5 @@
 package top.nololiyt.yueyinqiu.bukkitplugins.marksapi;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
 import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.exceptions.IllegalPrefixException;
 import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.exceptions.OccupiedPrefixException;
 
@@ -28,7 +26,7 @@ public class MarksProviderList
      * @throws OccupiedPrefixException Already contains a provider with the same prefix.
      * @throws IllegalPrefixException The prefix is illegal.
      */
-    public void add(@NotNull MarksProvider marksProvider)
+    public void add(MarksProvider marksProvider)
             throws OccupiedPrefixException,IllegalPrefixException
     {
         String prefix = marksProvider.getPrefix();
@@ -61,7 +59,7 @@ public class MarksProviderList
      * @param marksProvider The provider.
      * @return Whether the provider is successfully removed.
      */
-    public boolean remove(@NotNull MarksProvider marksProvider)
+    public boolean remove(MarksProvider marksProvider)
     {
         try
         {
@@ -79,7 +77,6 @@ public class MarksProviderList
      *
      * @return The prefixes.
      */
-    @NotNull
     public Set<String> getAllPrefixes()
     {
         try
@@ -111,7 +108,6 @@ public class MarksProviderList
         }
     }
     
-    @NotNull
     Collection<MarksProvider> getAll()
     {
         try
@@ -125,8 +121,7 @@ public class MarksProviderList
         }
     }
     
-    @Nullable
-    MarksProvider get(@NotNull String key)
+    MarksProvider get(String key)
     {
         try
         {

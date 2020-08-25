@@ -1,7 +1,5 @@
 package top.nololiyt.yueyinqiu.bukkitplugins.marksapi;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
 import org.bukkit.Location;
 import top.nololiyt.yueyinqiu.bukkitplugins.marksapi.entities.MarkRelatedValues;
 
@@ -15,7 +13,6 @@ public interface MarksProvider
      *
      * @return The prefix.
      */
-    @NotNull
     String getPrefix();
     
     /**
@@ -25,8 +22,7 @@ public interface MarksProvider
      * @param markRelatedValues The related values.
      * @return The mark.
      */
-    @Nullable
-    Location getMark(@NotNull String key, @NotNull MarkRelatedValues markRelatedValues);
+    Location getMark( String key,  MarkRelatedValues markRelatedValues);
     
     /**
      * Returns all the marks' keys, except those the checker doesn't contains the required permission.
@@ -34,6 +30,6 @@ public interface MarksProvider
      * @param markRelatedValues The related values.
      * @return All the keys.
      */
-    @NotNull
-    Iterable<String> getAllMarksKey(@NotNull MarkRelatedValues markRelatedValues);
+    
+    Iterable<String> getAllMarksKey( MarkRelatedValues markRelatedValues);
 }

@@ -5,8 +5,8 @@
       <output-path>$PROJECT_DIR$/out/artifacts/MarksAPI</output-path>
       <root id="archive" name="MarksAPI.jar">
         <element id="module-output" name="MarksAPI" />
-        <element id="file-copy" path="$PROJECT_DIR$/MarksAPI/res/config.yml" />
-        <element id="file-copy" path="$PROJECT_DIR$/MarksAPI/res/plugin.yml" />
+        <element id="file-copy" path="$PROJECT_DIR$/MarksAPI/src/main/resources/config.yml" />
+        <element id="file-copy" path="$PROJECT_DIR$/MarksAPI/src/main/resources/plugin.yml" />
       </root>
     </artifact>
     <artifact type="jar" name="PlayersAsMarks">
@@ -24,6 +24,19 @@
       </root>
     </artifact>
   </component>
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="MarksAPI" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="MarksAPI" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
   <component name="InspectionProjectProfileManager">
     <profile version="1.0">
       <option name="myName" value="Project Default" />
@@ -33,6 +46,13 @@
   <component name="JavadocGenerationManager">
     <option name="OUTPUT_DIRECTORY" value="D:/javadoc" />
     <option name="LOCALE" value="en" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/MarksAPI/pom.xml" />
+      </list>
+    </option>
   </component>
   <component name="Palette2">
     <group name="Swing">
@@ -182,6 +202,61 @@
       </CLASSES>
       <JAVADOC />
       <SOURCES />
+    </library>
+    <library name="Maven: com.google.code.gson:gson:2.8.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.8.0/gson-2.8.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.8.0/gson-2.8.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.google.guava:guava:21.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/guava/guava/21.0/guava-21.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/guava/guava/21.0/guava-21.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/guava/guava/21.0/guava-21.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: commons-lang:commons-lang:2.6">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-lang/commons-lang/2.6/commons-lang-2.6.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-lang/commons-lang/2.6/commons-lang-2.6-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-lang/commons-lang/2.6/commons-lang-2.6-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.bukkit:bukkit:1.15.2-R0.1-SNAPSHOT">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/bukkit/bukkit/1.15.2-R0.1-SNAPSHOT/bukkit-1.15.2-R0.1-20200624.001047-124.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/bukkit/bukkit/1.15.2-R0.1-SNAPSHOT/bukkit-1.15.2-R0.1-20200624.001047-124-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/bukkit/bukkit/1.15.2-R0.1-SNAPSHOT/bukkit-1.15.2-R0.1-20200624.001047-124-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.yaml:snakeyaml:1.25">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/yaml/snakeyaml/1.25/snakeyaml-1.25.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/yaml/snakeyaml/1.25/snakeyaml-1.25-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/yaml/snakeyaml/1.25/snakeyaml-1.25-sources.jar!/" />
+      </SOURCES>
     </library>
   </component>
 </project>
