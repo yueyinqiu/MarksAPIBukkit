@@ -1,40 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ArtifactManager">
-    <artifact type="jar" name="MarksAPI">
-      <output-path>$PROJECT_DIR$/out/artifacts/MarksAPI</output-path>
-      <root id="archive" name="MarksAPI.jar">
-        <element id="module-output" name="MarksAPI" />
-        <element id="file-copy" path="$PROJECT_DIR$/MarksAPI/src/main/resources/config.yml" />
-        <element id="file-copy" path="$PROJECT_DIR$/MarksAPI/src/main/resources/plugin.yml" />
-      </root>
-    </artifact>
-    <artifact type="jar" name="PlayersAsMarks">
-      <output-path>$PROJECT_DIR$/out/artifacts/PlayersAsMarks</output-path>
-      <root id="archive" name="PlayersAsMarks.jar">
-        <element id="module-output" name="PlayersAsMarks" />
-        <element id="file-copy" path="$PROJECT_DIR$/PlayersAsMarks/res/plugin.yml" />
-      </root>
-    </artifact>
-    <artifact type="jar" name="Teleporter">
-      <output-path>$PROJECT_DIR$/out/artifacts/Teleporter</output-path>
-      <root id="archive" name="Teleporter.jar">
-        <element id="module-output" name="Teleporter" />
-        <element id="file-copy" path="$PROJECT_DIR$/Teleporter/res/plugin.yml" />
-      </root>
-    </artifact>
-  </component>
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="PlayersAsMarks" />
         <module name="MarksAPI" />
+        <module name="Teleporter" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="MarksAPI" target="1.8" />
+      <module name="PlayersAsMarks" target="1.8" />
+      <module name="Teleporter" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="InspectionProjectProfileManager">
@@ -51,6 +31,8 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/MarksAPI/pom.xml" />
+        <option value="$PROJECT_DIR$/PlayersAsMarks/pom.xml" />
+        <option value="$PROJECT_DIR$/Teleporter/pom.xml" />
       </list>
     </option>
   </component>
@@ -189,20 +171,6 @@
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
   </component>
   <component name="libraryTable">
-    <library name="bukkit-1.15.2-R0.1-20200606.093523-114">
-      <CLASSES>
-        <root url="jar://$PROJECT_DIR$/libs/bukkit-1.15.2-R0.1-20200606.093523-114.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES />
-    </library>
-    <library name="MarksAPI">
-      <CLASSES>
-        <root url="jar://$PROJECT_DIR$/libs/MarksAPI.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES />
-    </library>
     <library name="Maven: com.google.code.gson:gson:2.8.0">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar!/" />
