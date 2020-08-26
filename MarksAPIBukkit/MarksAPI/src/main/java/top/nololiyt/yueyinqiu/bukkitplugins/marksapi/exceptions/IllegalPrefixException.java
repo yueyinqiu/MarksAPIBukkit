@@ -6,14 +6,14 @@ package top.nololiyt.yueyinqiu.bukkitplugins.marksapi.exceptions;
 public class IllegalPrefixException extends RuntimeException
 {
     /**
-     * Constructs a new <code>IllegalPrefixException</code>.
+     * Constructs a new IllegalPrefixException.
      */
     public IllegalPrefixException()
     {
     }
     
     /**
-     * Constructs a new <code>IllegalPrefixException</code> with a message.
+     * Constructs a new IllegalPrefixException with a message.
      *
      * @param message The message.
      */
@@ -23,7 +23,7 @@ public class IllegalPrefixException extends RuntimeException
     }
     
     /**
-     * Constructs a new <code>IllegalPrefixException</code> with a message and a cause.
+     * Constructs a new IllegalPrefixException with a message and a cause.
      *
      * @param message The message.
      * @param cause   The cause.
@@ -34,7 +34,7 @@ public class IllegalPrefixException extends RuntimeException
     }
     
     /**
-     * Constructs a new <code>IllegalPrefixException</code> with a cause.
+     * Constructs a new IllegalPrefixException with a cause.
      *
      * @param cause The cause.
      */

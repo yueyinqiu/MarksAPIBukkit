@@ -23,15 +23,18 @@ public class MarksProviderList
      * Add a provider.
      *
      * @param marksProvider The provider.
-     * @throws OccupiedPrefixException Already contains a provider with the same prefix.
-     * @throws IllegalPrefixException The prefix is illegal.
+     * @exception OccupiedPrefixException Already contains a provider with the same prefix.
+     * @exception IllegalPrefixException The prefix is illegal.
+     * @exception IllegalArgumentException One or more arguments are null.
      */
     public void add(MarksProvider marksProvider)
-            throws OccupiedPrefixException,IllegalPrefixException
+            throws OccupiedPrefixException,IllegalPrefixException,IllegalArgumentException
     {
+        NullChecker.CheckArgument("marksProvider", marksProvider);
+        
         String prefix = marksProvider.getPrefix();
-        if (prefix.isEmpty())
-            throw new IllegalPrefixException("Prefix should not be an empty string.");
+        if (prefix == null || prefix.isEmpty())
+            throw new IllegalPrefixException("Prefix should not be an empty string or null.");
     
         for (char c : prefix.toLowerCase().toCharArray())
         {
@@ -57,10 +60,13 @@ public class MarksProviderList
      * Remove a provider.
      *
      * @param marksProvider The provider.
+     * @exception IllegalArgumentException One or more arguments are null.
      * @return Whether the provider is successfully removed.
      */
     public boolean remove(MarksProvider marksProvider)
     {
+        NullChecker.CheckArgument("marksProvider", marksProvider);
+    
         try
         {
             lock.writeLock().lock();

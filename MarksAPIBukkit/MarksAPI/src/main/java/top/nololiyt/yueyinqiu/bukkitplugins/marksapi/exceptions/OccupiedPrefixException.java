@@ -6,14 +6,14 @@ package top.nololiyt.yueyinqiu.bukkitplugins.marksapi.exceptions;
 public class OccupiedPrefixException extends RuntimeException
 {
     /**
-     * Constructs a new <code>OccupiedPrefixException</code>.
+     * Constructs a new OccupiedPrefixException.
      */
     public OccupiedPrefixException()
     {
     }
     
     /**
-     * Constructs a new <code>OccupiedPrefixException</code> with a message.
+     * Constructs a new OccupiedPrefixException with a message.
      *
      * @param message The message.
      */
@@ -23,7 +23,7 @@ public class OccupiedPrefixException extends RuntimeException
     }
     
     /**
-     * Constructs a new <code>OccupiedPrefixException</code> with a message and a cause.
+     * Constructs a new OccupiedPrefixException with a message and a cause.
      *
      * @param message The message.
      * @param cause   The cause.
@@ -34,7 +34,7 @@ public class OccupiedPrefixException extends RuntimeException
     }
     
     /**
-     * Constructs a new <code>OccupiedPrefixException</code> with a cause.
+     * Constructs a new OccupiedPrefixException with a cause.
      *
      * @param cause The cause.
      */
