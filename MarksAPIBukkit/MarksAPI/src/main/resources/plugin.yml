@@ -2,6 +2,6 @@ name: MarksAPI
 description: Share the marks!
 website: https://github.com/yueyinqiu/MarksBukkit/wiki
 
-version: '3.00'
+version: '3.01'
 author: yueyinqiu5990
 main: top.nololiyt.yueyinqiu.bukkitplugins.marksapi.plugin.Plugin

@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>top.nololiyt.yueyinqiu.bukkitplugins</groupId>
-    <artifactId>MarksAPI</artifactId>
-    <version>3.00</version>
+    <groupId>top.nololiyt.yueyinqiu.bukkitplugins.marksapi</groupId>
+    <artifactId>marksapi</artifactId>
+    <version>3.01</version>
 
     <repositories>
         <repository>
