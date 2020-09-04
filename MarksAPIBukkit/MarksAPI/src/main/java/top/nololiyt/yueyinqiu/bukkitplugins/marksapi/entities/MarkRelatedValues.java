@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permissible;
 
 /**
- * Represents some related values to get a mark.
+ * Represents some values related to a mark.
  */
 public interface MarkRelatedValues
 {
